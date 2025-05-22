@@ -1,0 +1,12 @@
+light=input("colour:")
+
+if(light=="red"):
+    print("stop")
+elif(light=="green"):
+    print("go")
+elif(light=="yellow"):    
+    print("go slow")
+else:
+    print("light broken")    
+        
+    
