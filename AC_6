@@ -1,0 +1,7 @@
+p=float(input("Principal:"))
+r=float(input("Rate of Interest:"))
+t=int(input("yrs:"))
+
+SI=(p*r*t)/100
+
+print(SI)
