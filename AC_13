@@ -1,0 +1,2 @@
+str1="This is me\nI am Nipashree"
+print(str1)
