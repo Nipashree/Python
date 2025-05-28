@@ -1,0 +1,3 @@
+Str="Myself me"
+print(Str[:6])
+print(Str[7:])
