@@ -1,0 +1,2 @@
+Str="Myself"
+print(Str[0:len(Str)])
