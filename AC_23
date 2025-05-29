@@ -1,0 +1,2 @@
+Str="myself"
+print(Str.replace("e"," "))
