@@ -1,0 +1,3 @@
+marks=[63,48,52,96,56]
+print(marks[1:4])
+print(marks[-3:-1])
