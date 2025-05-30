@@ -1,0 +1,4 @@
+stu=["Karan", 100,14,"Delhi"]
+print(stu)
+stu[2]=15
+print(stu)
