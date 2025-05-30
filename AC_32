@@ -1,0 +1,17 @@
+list=[2,3,6,4,5]
+list.append(9)
+print(list)
+list.sort()
+print(list)
+list.sort(reverse=True)
+print(list)
+list.reverse()
+print(list)
+list.insert(2,8)
+print(list)
+
+my_list=[2,1,5,6,1]
+my_list.remove(1)
+print(my_list)
+my_list.pop(3)
+print(my_list)
