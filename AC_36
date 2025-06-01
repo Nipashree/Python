@@ -1,0 +1,12 @@
+list=["m',"a","a","m"]
+
+l=list.copy()
+l.reverse()
+
+if(list==l):
+    print("Palindrome")
+    
+else:
+    print("Non palindrome")  
+    
+   
