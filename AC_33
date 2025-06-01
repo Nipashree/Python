@@ -1,0 +1,12 @@
+list=[1,3,2]
+
+l=list.copy()
+l.reverse()
+
+if(list==l):
+    print("Palindrome")
+    
+else:
+    print("Non palindrome")  
+    
+   
