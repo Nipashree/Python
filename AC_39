@@ -1,0 +1,3 @@
+nul_dict={}
+nul_dict["name"]="Hello"
+print(nul_dict)
