@@ -1,0 +1,11 @@
+info={
+    "animal":"tiger",
+    "bird":"crow",
+    "forest":["Sundarban","Gir","Kanziranga"],
+    "States":("WB","Gujrat","Assam"),
+    "insect" :"butterfly",
+    "No":128.0,
+    "Bio reserve":32
+}
+
+print(info)
