@@ -1,0 +1,13 @@
+student={
+    "name":"Rahul",
+    "sub":{
+        "Phys":87,
+        "Chem":98,
+        "Bio":78
+    }
+}
+
+print(type(student))
+print(student)
+print(student["sub"]["Chem"])
+print(student.keys())
