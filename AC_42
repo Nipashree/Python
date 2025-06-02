@@ -1,0 +1,33 @@
+student={
+    "name":"Rahul",
+    "sub":{
+        "Phys":87,
+        "Chem":98,
+        "Bio":78
+    }
+}
+
+print(type(student))
+print(student)
+print(student["sub"]["Chem"])
+print(list(student.keys()))
+print(len(student))
+print(len(list(student.keys())))
+print(student.values())
+print(list(student.values()))
+print(student.items ())
+pairs=list(student.items())
+print(pairs[0])
+
+print(student["name"])
+print(student.get("name"))
+
+student.update({"city":"delhi","age":16})
+print(student)
+
+new_dict = {"name": "neha", "age": "23"}
+print(new_dict)
+new_dict.update(name="rohit")
+
+
+print(new_dict)
