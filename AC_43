@@ -1,0 +1,7 @@
+collect={1,2,3,4,"Hello"}
+print(collect)
+print(type(collect))
+
+col={1,2,2,3}
+print(col)
+print(len(col))
