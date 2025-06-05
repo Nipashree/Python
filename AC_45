@@ -1,0 +1,12 @@
+marks = {}
+
+x = int(input("Phys: "))
+marks.update({"Ph": x})
+
+x = int(input("Chem: "))
+marks.update({"Ch": x})
+
+x = int(input("Bio: "))
+marks.update({"Bios": x})
+
+print(marks)
