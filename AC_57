@@ -1,0 +1,5 @@
+def avg(a,b,c):
+    Avg=(a+b+c)/3
+    print("AVG:",Avg)   
+    
+avg(52,69,78)    
