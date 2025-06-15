@@ -1,0 +1,11 @@
+alp = ["a", "b", "c"]
+
+def my_len(lst):
+    print(len(lst))
+    
+def print_list(lst):   
+    for item in lst:    
+        print(item, end=" ") 
+
+my_len(alp)
+print_list(alp)
