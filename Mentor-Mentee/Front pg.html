@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentor-Mentee System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eeaAA 0%, #764ba2AA 100%), 
+                        url('mentor.jpg') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: rgba(255,255,255,0.85);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 2rem;
+            min-width: 400px;
+            max-width: 800px;
+            width: 90%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: #4a5568;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 1rem;
+        }
+
+        .login-form, .dashboard {
+            display: none;
+        }
+
+        .login-form.active, .dashboard.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: #718096;
+        }
+
+        .btn-danger {
+            background: #e53e3e;
+        }
+
+        .problem-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .student-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .student-name {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .roll-number {
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+        }
+
+        .problem-text {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .timestamp {
+            color: #a0aec0;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        .search-box {
+            margin-bottom: 2rem;
+        }
+
+        .no-problems {
+            text-align: center;
+            color: #718096;
+            font-style: italic;
+            padding: 2rem;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+
+        .user-info {
+            background: #e6fffa;
+            border: 1px solid #81e6d9;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .welcome-text {
+            color: #234e52;
+            font-weight: 600;
+        }
+
+        .demo-credentials {
+            background: #fff5f5;
+            border: 1px solid #feb2b2;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .demo-credentials h4 {
+            color: #c53030;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-credentials p {
+            color: #742a2a;
+            margin-bottom: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+                min-width: unset;
+            }
+            .student-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 Mentor-Mentee System</h1>
+            <p>Connect teachers and students for better learning support</p>
+        </div>
+
+        <!-- Login Form -->
+        <div class="login-form active" id="loginForm">
+            <form id="authForm">
+                <div class="form-group">
+                    <label for="userType">Login as:</label>
+                    <select id="userType" required>
+                        <option value="">Select user type</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="student">Student</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" required>
+                </div>
+
+                <div class="form-group" id="rollNumberGroup" style="display: none;">
+                    <label for="rollNumber">Roll Number:</label>
+                    <input type="text" id="rollNumber">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required>
+                </div>
+
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+
+        <!-- Student Dashboard -->
+        <div class="dashboard" id="studentDashboard">
+            <div class="user-info">
+                <span class="welcome-text" id="studentWelcome"></span>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+
+            <form id="problemForm">
+                <div class="form-group">
+                    <label for="problemDescription">Describe your problem:</label>
+                    <textarea id="problemDescription" placeholder="Please describe the problem you're facing in detail..." required></textarea>
+                </div>
+                <button type="submit" class="btn">Submit Problem</button>
+            </form>
+
+            <div id="studentProblems"></div>
+        </div>
+
+        <!-- Teacher Dashboard -->
+        <div class="dashboard" id="teacherDashboard">
+            <div class="user-info">
+                <span class="welcome-text">Welcome, Teacher!</span>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+
+            <div class="search-box">
+                <div class="form-group">
+                    <label for="searchRoll">Search by Roll Number:</label>
+                    <input type="text" id="searchRoll" placeholder="Enter roll number (e.g., CS001)">
+                </div>
+                <button type="button" class="btn" onclick="searchByRoll()">Search</button>
+                <button type="button" class="btn btn-secondary" onclick="showAllProblems()">Show All Problems</button>
+            </div>
+
+            <div id="problemsList"></div>
+        </div>
+    </div>
+
+    <script>
+        // In-memory data storage
+        let users = {
+            teacher: { username: 'teacher', password: 'teacher123', type: 'teacher' },
+            student1: { username: 'student1', password: 'student123', type: 'student', rollNumber: 'CS001', name: 'John Doe' },
+            student2: { username: 'student2', password: 'student123', type: 'student', rollNumber: 'CS002', name: 'Jane Smith' }
+        };
+
+        let problems = [
+            {
+                id: 1,
+                studentName: 'John Doe',
+                rollNumber: 'CS001',
+                problem: 'I am having trouble understanding recursion in programming. The concept seems confusing and I cannot solve recursive problems effectively.',
+                timestamp: new Date('2024-08-29T10:30:00').toLocaleString()
+            },
+            {
+                id: 2,
+                studentName: 'Jane Smith',
+                rollNumber: 'CS002',
+                problem: 'I find it difficult to manage time during exams. I often run out of time before completing all questions.',
+                timestamp: new Date('2024-08-30T14:15:00').toLocaleString()
+            }
+        ];
+
+        let currentUser = null;
+
+        // DOM elements
+        const loginForm = document.getElementById('loginForm');
+        const studentDashboard = document.getElementById('studentDashboard');
+        const teacherDashboard = document.getElementById('teacherDashboard');
+        const userTypeSelect = document.getElementById('userType');
+        const rollNumberGroup = document.getElementById('rollNumberGroup');
+
+        // Show/hide roll number field based on user type
+        userTypeSelect.addEventListener('change', function() {
+            if (this.value === 'student') {
+                rollNumberGroup.style.display = 'block';
+                document.getElementById('rollNumber').required = true;
+            } else {
+                rollNumberGroup.style.display = 'none';
+                document.getElementById('rollNumber').required = false;
+            }
+        });
+
+        // Handle login
+        document.getElementById('authForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const userType = document.getElementById('userType').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const rollNumber = document.getElementById('rollNumber').value;
+
+            // Find user
+            let user = null;
+            for (let key in users) {
+                if (users[key].username === username && users[key].password === password && users[key].type === userType) {
+                    if (userType === 'student' && users[key].rollNumber !== rollNumber) {
+                        continue;
+                    }
+                    user = users[key];
+                    break;
+                }
+            }
+
+            if (user) {
+                currentUser = user;
+                loginForm.classList.remove('active');
+                
+                if (user.type === 'student') {
+                    document.getElementById('studentWelcome').textContent = `Welcome, ${user.name}! (${user.rollNumber})`;
+                    studentDashboard.classList.add('active');
+                    loadStudentProblems();
+                } else {
+                    teacherDashboard.classList.add('active');
+                    showAllProblems();
+                }
+            } else {
+                alert('Invalid credentials. Please check your login details.');
+            }
+        });
+
+        // Handle problem submission
+        document.getElementById('problemForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const problemDescription = document.getElementById('problemDescription').value;
+            
+            if (problemDescription.trim()) {
+                const newProblem = {
+                    id: problems.length + 1,
+                    studentName: currentUser.name,
+                    rollNumber: currentUser.rollNumber,
+                    problem: problemDescription,
+                    timestamp: new Date().toLocaleString()
+                };
+                
+                problems.push(newProblem);
+                document.getElementById('problemDescription').value = '';
+                loadStudentProblems();
+                alert('Problem submitted successfully!');
+            }
+        });
+
+        // Load student's own problems
+        function loadStudentProblems() {
+            const studentProblemsDiv = document.getElementById('studentProblems');
+            const studentProblems = problems.filter(p => p.rollNumber === currentUser.rollNumber);
+            
+            if (studentProblems.length === 0) {
+                studentProblemsDiv.innerHTML = '<div class="no-problems">You haven\'t submitted any problems yet.</div>';
+                return;
+            }
+            
+            let html = '<h3 style="margin: 2rem 0 1rem 0; color: #4a5568;">Your Submitted Problems:</h3>';
+            studentProblems.forEach(problem => {
+                html += `
+                    <div class="problem-card">
+                        <div class="problem-text">${problem.problem}</div>
+                        <div class="timestamp">Submitted: ${problem.timestamp}</div>
+                    </div>
+                `;
+            });
+            
+            studentProblemsDiv.innerHTML = html;
+        }
+
+        // Show all problems (teacher view)
+        function showAllProblems() {
+            const problemsList = document.getElementById('problemsList');
+            
+            if (problems.length === 0) {
+                problemsList.innerHTML = '<div class="no-problems">No problems submitted yet.</div>';
+                return;
+            }
+            
+            let html = '<h3 style="margin-bottom: 1rem; color: #4a5568;">All Student Problems:</h3>';
+            problems.forEach(problem => {
+                html += `
+                    <div class="problem-card">
+                        <div class="student-info">
+                            <span class="student-name">${problem.studentName}</span>
+                            <span class="roll-number">${problem.rollNumber}</span>
+                        </div>
+                        <div class="problem-text">${problem.problem}</div>
+                        <div class="timestamp">Submitted: ${problem.timestamp}</div>
+                    </div>
+                `;
+            });
+            
+            problemsList.innerHTML = html;
+        }
+
+        // Search problems by roll number
+        function searchByRoll() {
+            const searchRoll = document.getElementById('searchRoll').value.trim().toUpperCase();
+            const problemsList = document.getElementById('problemsList');
+            
+            if (!searchRoll) {
+                alert('Please enter a roll number to search.');
+                return;
+            }
+            
+            const filteredProblems = problems.filter(p => p.rollNumber.toUpperCase() === searchRoll);
+            
+            if (filteredProblems.length === 0) {
+                problemsList.innerHTML = `<div class="no-problems">No problems found for roll number: ${searchRoll}</div>`;
+                return;
+            }
+            
+            let html = `<h3 style="margin-bottom: 1rem; color: #4a5568;">Problems for Roll Number: ${searchRoll}</h3>`;
+            filteredProblems.forEach(problem => {
+                html += `
+                    <div class="problem-card">
+                        <div class="student-info">
+                            <span class="student-name">${problem.studentName}</span>
+                            <span class="roll-number">${problem.rollNumber}</span>
+                        </div>
+                        <div class="problem-text">${problem.problem}</div>
+                        <div class="timestamp">Submitted: ${problem.timestamp}</div>
+                    </div>
+                `;
+            });
+            
+            problemsList.innerHTML = html;
+        }
+
+        // Logout function
+        function logout() {
+            currentUser = null;
+            
+            // Hide all dashboards
+            studentDashboard.classList.remove('active');
+            teacherDashboard.classList.remove('active');
+            
+            // Show login form
+            loginForm.classList.add('active');
+            
+            // Reset form
+            document.getElementById('authForm').reset();
+            document.getElementById('rollNumberGroup').style.display = 'none';
+            document.getElementById('searchRoll').value = '';
+        }
+
+        // Clear search and show all problems
+        document.getElementById('searchRoll').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchByRoll();
+            }
+        });
+    </script>
+</body>
+</html>
