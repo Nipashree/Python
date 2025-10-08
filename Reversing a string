@@ -1,3 +1,0 @@
-s = "hello world from cpp"
-reversed_s = ' '.join(s.split()[::-1])
-print(reversed_s)
