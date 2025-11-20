@@ -1,0 +1,32 @@
+# Program to generate Fibonacci-based stock trend up to N days
+
+# Take input from user
+n = int(input("Enter number of days (N): "))
+
+# First two Fibonacci values
+a, b = 0, 1
+
+print("Fibonacci-based stock trend:")
+
+if n == 1:
+    print(a)
+else:
+    print(a, b, end=" ")
+
+    for i in range(3, n + 1):
+        c = a + b
+        print(c, end=" ")
+        a = b
+        b = c
+
+# Algorithm:
+# Start
+# Input N
+# Set a = 0, b = 1
+# Print a, b (if N ≥ 2)
+# Repeat for i from 3 to N:
+# c = a + b
+# Print c
+# a = b
+# b = c
+# Stop
